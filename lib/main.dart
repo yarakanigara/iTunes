@@ -37,7 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.fromLTRB(
-                  50, 50, 50, 50 - MediaQuery.of(context).padding.top),
+                  48, 48, 48, 48 - MediaQuery.of(context).padding.top),
+              decoration: BoxDecoration(
+                color: Colors.black12,
+              ),
               child: TextField(
                 maxLines: 1,
                 style: TextStyle(backgroundColor: Colors.white),
@@ -50,17 +53,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     hintText: 'Search Artists',
                     counterText: "",
                     border: new OutlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.blue)
-                    ),
+                        borderSide: new BorderSide(color: Colors.blue)),
                     isDense: true,
-                    contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10)),
+                    contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8)),
               ),
+            ),
+            Container(
+              padding: getArtist() ? EdgeInsets.all(0) : EdgeInsets.fromLTRB(24, 8, 24, 8),
               decoration: BoxDecoration(
-                  border: BorderDirectional(
-                      bottom: BorderSide(color: Colors.black)),
-                  color: Colors.black12
-                  // boxShadow: [BoxShadow(color: Colors.black)]
+                border: BorderDirectional(
+                    bottom: BorderSide(color: Colors.black38)),
+                color: Colors.black12,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: getArtist() ? [] : [
+                  Text(
+                    "Artist Name",
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                   ),
+                  Text(
+                    "XX Songs",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Column(
@@ -78,4 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   searchArtistSongs() {}
   listOfArtist() {}
+  getArtist<bool>() {
+    return true;
+  }
 }
