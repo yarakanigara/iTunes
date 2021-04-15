@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:i_tunes/music_player.dart';
-import 'package:i_tunes/ListOfSongs.dart';
+import 'package:i_tunes/widgets/music_player.dart';
+import 'package:i_tunes/models/ListOfSongs.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:convert' as convert;
 
-import 'package:i_tunes/songs.dart';
+import 'package:i_tunes/widgets/songs.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+Uri getITunesUri(String artist) {
+  return Uri.https(
+      'itunes.apple.com', '/search', {'media': 'music', 'term': artist});
 }
 
 class MyApp extends StatelessWidget {
@@ -48,10 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
   //     );
   //   });
   // }
+  //
+  //
 
   Future<dynamic> getArtists(String artist) async {
-    var url = Uri.https(
-        'itunes.apple.com', '/search', {'media': 'music', 'term': artist});
+    var url = getITunesUri(artist);
+    print(url);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       dynamic jsonResponse =
@@ -84,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.black12,
                       ),
                       child: TextField(
+                        key: Key("artistSearchField"),
                         maxLines: 1,
                         style: TextStyle(backgroundColor: Colors.white),
                         onSubmitted: (artist) => {
@@ -103,8 +111,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     // List Songs Section
-                    Expanded(
-                      child: Songs(
+                    Expanded( 
+                      child: Songs( 
+                        key: Key("Songs"),
                         songs: context.read<ListOfSongs>().songs,
                         // playSong: showMusicPlayer,
                       ),
@@ -112,7 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              bottomSheet: context.watch<ListOfSongs>().currentTrack != null ? MusicPlayer():null,
+              bottomSheet: context.watch<ListOfSongs>().currentTrack != null
+                  ? MusicPlayer()
+                  : null,
             ));
   }
 }

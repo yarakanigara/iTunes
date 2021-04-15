@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:i_tunes/ListOfSongs.dart';
+import 'package:i_tunes/models/ListOfSongs.dart';
 import 'package:provider/provider.dart';
 
-import 'dart:async';
-import 'dart:io';
 
 class MusicPlayer extends StatefulWidget {
   final track;
@@ -23,13 +21,13 @@ class _MusicPlayerState extends State<MusicPlayer> {
   AudioCache cache;
   Duration position = new Duration();
   Duration duration = new Duration();
-  
+
   @override
   void initState() {
     _player = new AudioPlayer();
-    cache = new AudioCache(fixedPlayer: _player)  ;
+    cache = new AudioCache(fixedPlayer: _player);
     super.initState();
-  } 
+  }
 
   void getTrack(dynamic track) async {
     if (playing) {
@@ -59,19 +57,46 @@ class _MusicPlayerState extends State<MusicPlayer> {
     });
   }
 
-  void changeTrack(String change) {
-    if(change == "Next") {
-      
+  void changeTrack(String change, BuildContext context) {
+    if (change == "next") {
+      var idxTrack = context.read<ListOfSongs>().indexTrack;
+      if (idxTrack == context.read<ListOfSongs>().songs.length) {
+        idxTrack = 0;
+        context
+            .read<ListOfSongs>()
+            .setCurrentTrack(context.read<ListOfSongs>().songs[idxTrack]);
+      }else {
+        idxTrack = idxTrack+1;
+        context
+            .read<ListOfSongs>()
+            .setCurrentTrack(context.read<ListOfSongs>().songs[idxTrack]);
+      }
+      context
+            .read<ListOfSongs>()
+            .setCurrentTrack(idxTrack);
     }
-    if(change == "Prev") {
-      
+    if (change == "prev") {
+      var idxTrack = context.read<ListOfSongs>().indexTrack;
+      if (idxTrack == 0) {
+        idxTrack = context.read<ListOfSongs>().songs.length - 1;
+        context
+            .read<ListOfSongs>()
+            .setCurrentTrack(context.read<ListOfSongs>().songs[idxTrack]);
+      }else {
+        idxTrack = idxTrack-1;
+        context
+            .read<ListOfSongs>()
+            .setCurrentTrack(context.read<ListOfSongs>().songs[idxTrack]);
+      }
+      context
+            .read<ListOfSongs>()
+            .setCurrentTrack(idxTrack);
     }
   }
 
   Widget musicSlider() {
     return SliderTheme(
-        data: SliderThemeData(
-            thumbColor: Colors.white, disabledThumbColor: Colors.white),
+        data: SliderThemeData(thumbColor: Colors.white, disabledThumbColor: Colors.white),
         child: Slider.adaptive(
           activeColor: Colors.black87,
           inactiveColor: Colors.black45,
@@ -79,10 +104,10 @@ class _MusicPlayerState extends State<MusicPlayer> {
           max: duration.inSeconds.toDouble(),
           value: position.inSeconds.toDouble(),
           onChanged: (double value) {
-            print("CHANGE");
             _player.seek(new Duration(seconds: value.toInt()));
           },
-        ));
+        )
+        );
   }
 
   @override
@@ -103,20 +128,19 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     iconSize: 32,
                     color: Colors.black54,
                     onPressed: () => {
-
+                      changeTrack("prev", context)
                     }),
                 IconButton(
-                    icon: playing? Icon(Icons.pause) : Icon(Icons.play_arrow),
+                    icon: playing ? Icon(Icons.pause) : Icon(Icons.play_arrow),
                     iconSize: 40,
                     color: Colors.black54,
-                    onPressed: () => {
-                          getTrack(context.read<ListOfSongs>().currentTrack)
-                        }),
+                    onPressed: () =>
+                        {getTrack(context.read<ListOfSongs>().currentTrack)}),
                 IconButton(
                     icon: Icon(Icons.skip_next_sharp),
                     iconSize: 32,
                     color: Colors.black54,
-                    onPressed: () => {})
+                    onPressed: () => {changeTrack("next", context)})
               ],
             ),
             Container(

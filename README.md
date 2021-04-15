@@ -1,16 +1,51 @@
 # i_tunes
 
-A new Flutter project.
+Music Project that pull database from iTunes and built with Flutter.
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
+
+<!-- GETTING STARTED -->
 ## Getting Started
+To run this project you need Android SDK 8.1 (Oreo) API 27
 
-This project is a starting point for a Flutter application.
+### Prerequisites
+1. Flutter
+2. Android Studio
 
-A few resources to get you started if this is your first Flutter project:
+### Installation
+1. Clone this project
+2. Make sure you have android studio
+3. Run the android emulators
+4. Enable flutter in your terminal
+5. Execute flutter run in your root project
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<!-- USAGE EXAMPLES -->
+## Usage
+1. Search artist name
+2. Choose song want to play
+3. Play, pause, stop music
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- CONTACT -->
+## Contact
+Yara Kanigara - yara.kanigara@gmail.com
+
+<!-- ACKNOWLEDGEMENTS -->
+## Acknowledgements
+* [Provider](https://pub.dev/packages/provider)
+* [AudioPlayers](https://pub.dev/packages/audioplayers  )
+* [HTTP](https://pub.dev/packages/http)

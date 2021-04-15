@@ -10,6 +10,9 @@ class ListOfSongs extends ChangeNotifier {
   dynamic _currentTrack;
   dynamic get currentTrack => _currentTrack;
 
+  int _indexTrack;
+  int get indexTrack => _indexTrack;
+
   ListOfSongs(this._artistSearch, this._songs);
 
   void setArtistSearch(String val) {
@@ -26,4 +29,10 @@ class ListOfSongs extends ChangeNotifier {
     this._currentTrack = val;
     notifyListeners();
   }
+  
+  void setIndexTrack(int val) {
+    this._indexTrack = val;
+    notifyListeners();
+  }
+
 }

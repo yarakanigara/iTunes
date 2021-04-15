@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:i_tunes/ListOfSongs.dart';
+import 'package:i_tunes/models/ListOfSongs.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 
@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 class Songs extends StatefulWidget {
   final songs;
   Songs({Key key, this.songs}) : super(key: key);
-  _SongsState createState() => _SongsState();
+  _SongsState   createState() => _SongsState();
 }
 
 class _SongsState extends State<Songs> {
@@ -71,8 +71,8 @@ class _SongsState extends State<Songs> {
                         context.read<ListOfSongs>().currentTrack != null ?  
                         context.read<ListOfSongs>().currentTrack['trackId'] == context.read<ListOfSongs>().songs[index]['trackId'] ? Lottie.asset('assets/lottie/56202-soundwave-loader.json') : null : null,
                       )
-                    ],
-                  ),
+                    ],        
+                  ),  
                 )
               )
             ),
