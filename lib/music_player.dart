@@ -19,10 +19,17 @@ class _MusicPlayerState extends State<MusicPlayer> {
   bool playing = false;
   IconData playBtn = Icons.play_arrow;
 
-  AudioPlayer _player = new AudioPlayer();
-  // AudioCache cache = new AudioCache(fixedPlayer: _player);
+  AudioPlayer _player;
+  AudioCache cache;
   Duration position = new Duration();
   Duration duration = new Duration();
+  
+  @override
+  void initState() {
+    _player = new AudioPlayer();
+    cache = new AudioCache(fixedPlayer: _player)  ;
+    super.initState();
+  } 
 
   void getTrack(dynamic track) async {
     if (playing) {
@@ -40,7 +47,6 @@ class _MusicPlayerState extends State<MusicPlayer> {
         });
       }
     }
-
     _player.onDurationChanged.listen((Duration d) {
       setState(() {
         duration = d;
@@ -51,6 +57,15 @@ class _MusicPlayerState extends State<MusicPlayer> {
         position = d;
       });
     });
+  }
+
+  void changeTrack(String change) {
+    if(change == "Next") {
+      
+    }
+    if(change == "Prev") {
+      
+    }
   }
 
   Widget musicSlider() {
@@ -87,18 +102,16 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     icon: Icon(Icons.skip_previous_sharp),
                     iconSize: 32,
                     color: Colors.black54,
-                    onPressed: () => {}),
+                    onPressed: () => {
+
+                    }),
                 IconButton(
-                    icon: Icon(Icons.play_arrow),
+                    icon: playing? Icon(Icons.pause) : Icon(Icons.play_arrow),
                     iconSize: 40,
                     color: Colors.black54,
                     onPressed: () => {
-                      print("PRESSED"),
-                      getTrack(context
-                          .read<ListOfSongs>()
-                          .currentTrack)
-                    }
-                  ),
+                          getTrack(context.read<ListOfSongs>().currentTrack)
+                        }),
                 IconButton(
                     icon: Icon(Icons.skip_next_sharp),
                     iconSize: 32,

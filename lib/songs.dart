@@ -6,8 +6,7 @@ import 'package:lottie/lottie.dart';
 
 class Songs extends StatefulWidget {
   final songs;
-  final playSong;
-  Songs({Key key, this.songs, this.playSong}) : super(key: key);
+  Songs({Key key, this.songs}) : super(key: key);
   _SongsState createState() => _SongsState();
 }
 
@@ -33,7 +32,6 @@ class _SongsState extends State<Songs> {
             margin: EdgeInsets.all(0),
             child: InkWell(
                 onTap: () {
-                  widget.playSong(context.read<ListOfSongs>().songs[index]);
                   context.read<ListOfSongs>().setCurrentTrack(context.read<ListOfSongs>().songs[index]);
                 },
                 child: Container(

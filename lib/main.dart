@@ -31,23 +31,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  // Pop-up music player
-  void showMusicPlayer(dynamic data) {
-    // _settingModalBottomSheet(context);
-    _scaffoldKey.currentState.showBottomSheet<Null>((BuildContext context) {
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(color: Colors.black12),
-        padding: EdgeInsets.all(16.0),
-        child: MusicPlayer(
-          track: data
-        ),
-        // child: Text(
-        //   data.toString()
-        // ),
-      );
-    });
-  }
+  // // Pop-up music player
+  // void showMusicPlayer(dynamic data) {
+  //   // _settingModalBottomSheet(context);
+  //   _scaffoldKey.currentState.showBottomSheet<Null>((BuildContext context) {
+  //     return Container(
+  //       width: double.infinity,
+  //       decoration: BoxDecoration(color: Colors.black12),
+  //       padding: EdgeInsets.all(16.0),
+  //       child: MusicPlayer(
+  //         track: data
+  //       ),
+  //       // child: Text(
+  //       //   data.toString()
+  //       // ),
+  //     );
+  //   });
+  // }
 
   Future<dynamic> getArtists(String artist) async {
     var url = Uri.https(
@@ -105,13 +105,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     // List Songs Section
                     Expanded(
                       child: Songs(
-                        songs: context.watch<ListOfSongs>().songs,
-                        playSong: showMusicPlayer,
+                        songs: context.read<ListOfSongs>().songs,
+                        // playSong: showMusicPlayer,
                       ),
                     )
                   ],
                 ),
               ),
+              bottomSheet: context.watch<ListOfSongs>().currentTrack != null ? MusicPlayer():null,
             ));
   }
 }
