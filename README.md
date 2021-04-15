@@ -49,3 +49,4 @@ Yara Kanigara - yara.kanigara@gmail.com
 * [Provider](https://pub.dev/packages/provider)
 * [AudioPlayers](https://pub.dev/packages/audioplayers  )
 * [HTTP](https://pub.dev/packages/http)
+* [Lottie](https://pub.dev/packages/lottie)
