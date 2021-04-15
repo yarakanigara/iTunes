@@ -24,8 +24,8 @@ Music Project that pull database from iTunes and built with Flutter.
 To run this project you need Android SDK 8.1 (Oreo) API 27
 
 ### Prerequisites
-1. Flutter
-2. Android Studio
+1. [Flutter] (https://flutter.dev/docs/get-started/install)
+2. [Android Studio] (https://developer.android.com/studio)
 
 ### Installation
 1. Clone this project
