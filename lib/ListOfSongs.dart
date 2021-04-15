@@ -24,7 +24,6 @@ class ListOfSongs extends ChangeNotifier {
 
   void setCurrentTrack(dynamic val) {
     this._currentTrack = val;
-    print("CURRENT TRACKKKKKK ==== " + this.currentTrack.toString());
     notifyListeners();
   }
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:i_tunes/ListOfSongs.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
 import 'dart:io';
 
 class MusicPlayer extends StatefulWidget {
-  MusicPlayer({Key key}) : super(key: key);
+  final track;
+  MusicPlayer({Key key, this.track}) : super(key: key);
 
   @override
   _MusicPlayerState createState() => _MusicPlayerState();
@@ -17,40 +19,57 @@ class _MusicPlayerState extends State<MusicPlayer> {
   bool playing = false;
   IconData playBtn = Icons.play_arrow;
 
-  AudioPlayer _player;
-  AudioCache cache;
+  AudioPlayer _player = new AudioPlayer();
+  // AudioCache cache = new AudioCache(fixedPlayer: _player);
   Duration position = new Duration();
-  Duration musicLength = new Duration();
+  Duration duration = new Duration();
 
-  @override
-  void initState() {
-    _player = new AudioPlayer();
-    cache = new AudioCache(fixedPlayer: _player);
+  void getTrack(dynamic track) async {
+    if (playing) {
+      var res = await _player.pause();
+      if (res == 1) {
+        setState(() {
+          playing = false;
+        });
+      }
+    } else {
+      var res = await _player.play(track['previewUrl'], isLocal: true);
+      if (res == 1) {
+        setState(() {
+          playing = true;
+        });
+      }
+    }
+
+    _player.onDurationChanged.listen((Duration d) {
+      setState(() {
+        duration = d;
+      });
+    });
+    _player.onAudioPositionChanged.listen((Duration d) {
+      setState(() {
+        position = d;
+      });
+    });
   }
-  
+
   Widget musicSlider() {
     return SliderTheme(
-      data: SliderThemeData(
-        thumbColor: Colors.white,
-        disabledThumbColor: Colors.white
-      ),
-      child: Slider.adaptive(
-        activeColor: Colors.black87,
-        inactiveColor: Colors.black45,
-        value: position.inSeconds.toDouble(),
-        max: musicLength.inSeconds.toDouble(),
-        onChanged: (value) {
-          seekToSec(value.toInt());
-        },
-      )
-    );
+        data: SliderThemeData(
+            thumbColor: Colors.white, disabledThumbColor: Colors.white),
+        child: Slider.adaptive(
+          activeColor: Colors.black87,
+          inactiveColor: Colors.black45,
+          min: 0.0,
+          max: duration.inSeconds.toDouble(),
+          value: position.inSeconds.toDouble(),
+          onChanged: (double value) {
+            print("CHANGE");
+            _player.seek(new Duration(seconds: value.toInt()));
+          },
+        ));
   }
 
-  void seekToSec(int sec) {
-    Duration newPos = Duration(seconds: sec);
-    _player.seek(newPos);
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,21 +93,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     iconSize: 40,
                     color: Colors.black54,
                     onPressed: () => {
-                          if (!playing)
-                            {
-                              setState(() {
-                                playBtn = Icons.pause;
-                                playing = true;
-                              })
-                            }
-                          else
-                            {
-                              setState(() {
-                                playBtn = Icons.play_arrow;
-                                playing = false;
-                              })
-                            }
-                        }),
+                      print("PRESSED"),
+                      getTrack(context
+                          .read<ListOfSongs>()
+                          .currentTrack)
+                    }
+                  ),
                 IconButton(
                     icon: Icon(Icons.skip_next_sharp),
                     iconSize: 32,

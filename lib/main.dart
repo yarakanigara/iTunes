@@ -33,14 +33,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Pop-up music player
   void showMusicPlayer(dynamic data) {
-    print("CLICK" + data.toString());
     // _settingModalBottomSheet(context);
     _scaffoldKey.currentState.showBottomSheet<Null>((BuildContext context) {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(color: Colors.black12),
         padding: EdgeInsets.all(16.0),
-        child: MusicPlayer(),
+        child: MusicPlayer(
+          track: data
+        ),
+        // child: Text(
+        //   data.toString()
+        // ),
       );
     });
   }

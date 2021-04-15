@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:i_tunes/ListOfSongs.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
+
 
 class Songs extends StatefulWidget {
-  final  songs;
+  final songs;
   final playSong;
   Songs({Key key, this.songs, this.playSong}) : super(key: key);
   _SongsState createState() => _SongsState();
@@ -24,7 +26,10 @@ class _SongsState extends State<Songs> {
         padding: EdgeInsets.all(0),
         itemCount: context.watch<ListOfSongs>().songs.length,
         itemBuilder: (context, index) => Card(
-            color: context.watch<ListOfSongs>().currentTrack == context.watch<ListOfSongs>().songs[index] ? Colors.white10 : Colors.white70,
+            color: (
+              context.read<ListOfSongs>().currentTrack != null ?  
+              context.read<ListOfSongs>().currentTrack['trackId'] == context.read<ListOfSongs>().songs[index]['trackId'] ? Colors.white10 : Colors.white70 : Colors.white70
+            ),
             margin: EdgeInsets.all(0),
             child: InkWell(
                 onTap: () {
@@ -38,7 +43,7 @@ class _SongsState extends State<Songs> {
                       Container( 
                         padding: EdgeInsets.fromLTRB(0, 0, 24, 0),
                         child: Image(
-                          image: NetworkImage(context.read<ListOfSongs>().songs[index]['artworkUrl100']),
+                          image: NetworkImage(context.read<ListOfSongs>().songs[index]['artworkUrl100'] ), 
                           height: 64,
                           width: 64,
                           fit: BoxFit.cover,
@@ -61,6 +66,13 @@ class _SongsState extends State<Songs> {
                           ],
                         )
                       ),
+                      Container (
+                        height: 50,
+                        width: 50,
+                        child: 
+                        context.read<ListOfSongs>().currentTrack != null ?  
+                        context.read<ListOfSongs>().currentTrack['trackId'] == context.read<ListOfSongs>().songs[index]['trackId'] ? Lottie.asset('assets/lottie/56202-soundwave-loader.json') : null : null,
+                      )
                     ],
                   ),
                 )
