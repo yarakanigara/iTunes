@@ -22,6 +22,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
   Duration position = new Duration();
   Duration musicLength = new Duration();
 
+  @override
+  void initState() {
+    _player = new AudioPlayer();
+    cache = new AudioCache(fixedPlayer: _player);
+  }
+  
   Widget musicSlider() {
     return SliderTheme(
       data: SliderThemeData(
@@ -44,13 +50,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
     Duration newPos = Duration(seconds: sec);
     _player.seek(newPos);
   }
-
-  @override
-  void initState() {
-    _player = new AudioPlayer();
-    cache = new AudioCache(fixedPlayer: _player);
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
